@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<!-- struts有自己的默认样式，使用constant标签可以将其样式变为空。 -->
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.ui.templateDir" value="template"/>
+	<constant name="struts.ui.templateSuffix" value="ftl"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<!-- struts2中DMI默认为关闭，如果使用动态方法调用，先把DMI设置为true -->
+  <package name="default" extends="struts-default" namespace="/">
+ 
+  	<!-- list.action用于列出所有分类 -->
+  	<action name="list" class="com.mimi.action.CategoryAction" method="list">
+  		<result>/listCategories.jsp</result>
+  		<interceptor-ref name="basicStack" />
+  	</action>
+  	
+  	<!-- edit-*.action用于分类的创建和更新。 -->
+  	<action name="edit-*" class="com.mimi.action.CategoryAction">
+  		<param name="id">{1}</param>
+  		<result>/editCategory.jsp</result>
+  		<interceptor-ref name="staticParams" /><!--传入参数id 必须位于basicStack之前-->
+  		<interceptor-ref name="basicStack"/><!-- 调用preparable接口的prepare方法。 -->
+  	</action>
+  	
+  	<action name="save" class="com.mimi.action.CategoryAction" method="save">
+  		<result name="input">/editCategory.jsp</result>
+  		<result type="redirect">list.action</result>
+  	</action>
+  	
+  	<action name="delete-*" class="com.mimi.action.CategoryAction" method="delete">
+  		<param name="id">{1}</param>
+  		<result type="redirect">list.action</result>
+  		<interceptor-ref name="staticParams"></interceptor-ref>
+  	</action>
+  	
+  </package>
+</struts>

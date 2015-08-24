@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<!-- struts有自己的默认样式，使用constant标签可以将其样式变为空。 -->
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.ui.templateDir" value="template"/>
+	<constant name="struts.ui.templateSuffix" value="ftl"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<!-- struts2中DMI默认为关闭，如果使用动态方法调用，先把DMI设置为true -->
+  <package name="userlogin" extends="struts-default" namespace="/">
+  	<action name="register"  class="com.mimi.action.RegisterAction">
+  		<exception-mapping result="error" exception="java.lang.Exception" />
+  		<result name="input">/WEB-INF/pages/register.jsp</result>
+  		<result name="success">/WEB-INF/pages/success.jsp</result>
+  		<result name="error">/WEB-INF/pages/error.jsp</result>
+  	</action>
+  </package>
+</struts>

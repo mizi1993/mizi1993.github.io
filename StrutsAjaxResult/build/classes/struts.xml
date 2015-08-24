@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<!-- struts有自己的默认样式，使用constant标签可以将其样式变为空。 --> 
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.ui.templateDir" value="template"/>
+	<constant name="struts.ui.templateSuffix" value="ftl"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<!-- struts2中DMI默认为关闭，如果使用动态方法调用，先把DMI设置为true -->
+  
+  <package name="default" extends="struts-default" namespace="/">
+  	<result-types>
+  		<result-type name="ajax" class="com.mimi.result.AjaxResult" />
+  		<result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+  	</result-types>
+  	<!-- 注明json的result类型以及拦截器 -->
+  	<interceptors>
+  		<interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"></interceptor>
+  	</interceptors>
+  	
+  	<action name="userAdd" class="com.mimi.action.UserAction" method="addUI">
+  		<result name="addUI">/WEB-INF/add_user.jsp</result>
+  	</action>
+  	<action name="userCheck" class="com.mimi.action.UserAction" method="checkUser">
+  		<result type="ajax"></result>
+  	</action>
+  	<action name="userAction" class="com.mimi.action.UserAction">
+  		<result>/WEB-INF/success.jsp</result>
+  	</action>
+  	<action name="userJsonAction" class="com.mimi.action.UserAction" method="showUser">
+  		<result type="json"></result>
+  	</action>
+  	<action name="jsonExampleAction" class="com.mimi.action.JsonExampleAction">
+  		<result type="json">
+  			<param name="excludeProperties">field4</param>
+  		</result>
+  	</action>
+  </package>
+</struts>
